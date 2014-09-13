@@ -9,7 +9,20 @@ Allows the user to interrupt scrolling.
 Usage
 -----
 
-TODO
+```sh
+bower install ease-scroll
+```
+
+```js
+var easeScroll = require('ease-scroll');
+
+document.getElementById('foo').addEventListener('click', function (event) {
+  event.preventDefault();
+  easeScroll.scrollToElementById('bar', 1000);
+});
+```
+
+See [ease-scroll-example](https://github.com/mietek/ease-scroll/) for a fully-featured usage example.
 
 
 License
