@@ -5,6 +5,9 @@ var ease = require('ease').ease;
 
 exports.getElementOffsetById = function (id) {
   var elem = document.getElementById(id);
+  if (!elem) {
+    return undefined;
+  }
   var y = 0;
   do {
     y += elem.offsetTop;
@@ -53,7 +56,10 @@ exports.getElementOffsetById = function (id) {
 
 
 exports.scrollToElementById = function (id, duration) {
-  exports.scrollToOffset(exports.getElementOffsetById(id), duration);
+  var offset = exports.getElementOffsetById(id);
+  if (offset !== undefined) {
+    exports.scrollToOffset(offset, duration);
+  }
 };
 
 
