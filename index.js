@@ -3,25 +3,11 @@
 var ease = require('ease').ease;
 
 
-exports.getElementOffsetById = function (id) {
-  var elem = document.getElementById(id);
-  if (!elem) {
-    return undefined;
-  }
-  var y = 0;
-  do {
-    y += elem.offsetTop;
-    elem = elem.offsetParent;
-  } while (elem);
-  return y;
-};
-
-
 (function () {
-  var isScrolling = false;
+  var scrolling = false;
 
   exports.scrollToOffset = function (offset, duration) {
-    if (isScrolling) {
+    if (scrolling) {
       return;
     }
     var startY = window.scrollY;
@@ -30,83 +16,39 @@ exports.getElementOffsetById = function (id) {
     var distance = targetY - startY;
     var startT = Date.now();
     var targetT = startT + duration;
-    var loop = function () {
-      if (!isScrolling) {
+    var onAnimationFrame = function () {
+      if (!scrolling) {
         return;
       }
-      var now = Date.now();
-      if (now >= targetT) {
-        isScrolling = false;
+      if (Date.now() >= targetT) {
+        scrolling = false;
         window.scrollTo(window.scrollX, targetY);
         return;
       }
-      var t = (now - startT) / duration;
+      var t = (Date.now() - startT) / duration;
       var y = startY + distance * ease(t);
       window.scrollTo(window.scrollX, y);
-      window.requestAnimationFrame(loop);
+      window.requestAnimationFrame(onAnimationFrame);
     };
-    isScrolling = true;
-    window.requestAnimationFrame(loop);
+    scrolling = true;
+    window.requestAnimationFrame(onAnimationFrame);
   };
 
-  exports.stopScrolling = function () {
-    isScrolling = false;
-  };
+  document.addEventListener('mousewheel', function () {
+    scrolling = false;
+  });
 })();
 
 
 exports.scrollToElementById = function (id, duration) {
-  var offset = exports.getElementOffsetById(id);
-  if (offset !== undefined) {
-    exports.scrollToOffset(offset, duration);
+  var target = document.getElementById(id);
+  if (!target) {
+    return;
   }
-};
-
-
-exports.getLocalLinks = function () {
-  var links = document.links;
-  var localLink = document.URL.replace(/#.*$/, '');
-  var ids = [];
-  for (var i = 0; i < links.length; i += 1) {
-    var hasTarget = links[i].href.lastIndexOf('#') !== -1;
-    if (hasTarget) {
-      var isLocal = links[i].href.indexOf(localLink) !== -1;
-      if (isLocal) {
-        ids.push(links[i]);
-      }
-    }
-  }
-  return ids;
-};
-
-
-exports.addScrollingToLocalLinks = function () {
-  function listener(id) {
-    return function (event) {
-      event.preventDefault();
-      exports.scrollToElementById(id, 1000);
-    };
-  }
-  exports.getLocalLinks().forEach(function (link) {
-    var id = link.href.slice(link.href.lastIndexOf('#') + 1);
-    link.addEventListener('click', listener(id));
-  });
-};
-
-
-exports.allowUserToStopScrolling = function () {
-  var wheel;
-  if ('onwheel' in document.createElement('div')) {
-    wheel = 'wheel';
-  } else if (document.onmousewheel !== undefined) {
-    wheel = 'mousewheel';
-  } else {
-    wheel = 'DOMMouseScroll';
-  }
-  document.addEventListener(wheel, function () {
-    exports.stopScrolling();
-  });
-  document.addEventListener('touchstart', function () {
-    exports.stopScrolling();
-  });
+  var y = 0;
+  do {
+    y += target.offsetTop;
+    target = target.offsetParent;
+  } while (target);
+  exports.scrollToOffset(y, duration);
 };
