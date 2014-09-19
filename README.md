@@ -22,7 +22,7 @@ document.getElementById('foo').addEventListener('click', function (event) {
 });
 ```
 
-See [ease-scroll-example](https://github.com/mietek/ease-scroll/) for a fully-featured usage example.
+See [ease-scroll-example](https://github.com/mietek/ease-scroll-example/) for a fully-featured usage example.
 
 
 License
