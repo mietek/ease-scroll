@@ -40,15 +40,23 @@ var ease = require('ease').ease;
 })();
 
 
-exports.scrollToElementById = function (id, duration) {
+exports.getElementOffsetById = function (id) {
   var target = document.getElementById(id);
   if (!target) {
-    return;
+    return undefined;
   }
   var y = 0;
   do {
     y += target.offsetTop;
     target = target.offsetParent;
   } while (target);
-  exports.scrollToOffset(y, duration);
+  return y;
+};
+
+
+exports.scrollToElementById = function (id, duration) {
+  var offset = exports.getElementOffsetById(id);
+  if (offset !== undefined) {
+    exports.scrollToOffset(offset, duration);
+  }
 };
