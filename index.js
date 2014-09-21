@@ -61,6 +61,8 @@ exports.getElementOffsetById = function (id) {
 exports.scrollToElementById = function (id, duration) {
   var offset = exports.getElementOffsetById(id);
   if (offset !== undefined) {
-    exports.scrollToOffset(offset, duration);
+    var element = document.getElementById(id);
+    var marginTop = parseInt(getComputedStyle(element).marginTop);
+    exports.scrollToOffset(offset - marginTop, duration);
   }
 };
