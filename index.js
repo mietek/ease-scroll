@@ -37,6 +37,10 @@ var ease = require('ease').ease;
   document.addEventListener('mousewheel', function () {
     scrolling = false;
   });
+  // NOTE: This also enables :active pseudo-classes on links in Safari on iOS.
+  document.addEventListener('touchstart', function () {
+    scrolling = false;
+  });
 })();
 
 
