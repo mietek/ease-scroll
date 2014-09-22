@@ -7,6 +7,12 @@ var ease = require('ease').ease;
   var scrolling = false;
 
   exports.scrollToOffset = function (offset, duration) {
+    if (offset === undefined) {
+      throw new Error('missing scroll offset');
+    }
+    if (duration === undefined) {
+      throw new Error('missing scroll duration');
+    }
     if (scrolling) {
       return;
     }
