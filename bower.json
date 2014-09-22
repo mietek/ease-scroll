@@ -1,16 +1,16 @@
 {
   "name": "ease-scroll",
-  "description": "A minimal implementation of smooth scrolling in the browser",
+  "description": "Smooth scrolling in the browser",
   "authors": [
-    "Miëtek Bak <mietek@bak.io>"
+    "Miëtek Bak <hello@mietek.io>"
   ],
   "license": "MIT X11",
-  "homepage": "https://github.com/mietek/ease-scroll",
+  "homepage": "https://github.com/mietek/ease-scroll/",
   "ignore": [
     "README.md"
   ],
   "main": "index.js",
   "dependencies": {
-    "ease": "^1.0.0"
+    "ease": "*"
   }
 }

@@ -1,17 +1,15 @@
 ease-scroll
 ===========
 
-A minimal implementation of smooth scrolling in the browser.
+Smooth scrolling in the browser.
 
-Allows the user to interrupt scrolling.
+Minimal.  Allows the user to interrupt scrolling.
+
+Uses [ease](https://github.com/mietek/ease/) for CSS-style easing.
 
 
 Usage
 -----
-
-```sh
-bower install ease-scroll
-```
 
 ```js
 var easeScroll = require('ease-scroll');
@@ -22,7 +20,16 @@ document.getElementById('foo').addEventListener('click', function (event) {
 });
 ```
 
-See [ease-scroll-example](https://github.com/mietek/ease-scroll-example/) for a fully-featured usage example.
+See [ease-scroll-example](https://github.com/mietek/ease-scroll-example/) for more information.
+
+
+### Installation
+
+```sh
+bower install ease-scroll
+```
+
+Requires [Bower](http://bower.io/).
 
 
 License
