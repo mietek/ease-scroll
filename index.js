@@ -2,22 +2,22 @@
 
 var ease = require('ease').ease;
 
+/* global innerHeight, requestAnimationFrame, scrollX, scrollY */
+
 
 (function () {
   var scrolling = false;
 
   exports.scrollToOffset = function (offset, duration, target) {
-    if (offset === undefined) {
-      throw new Error('missing scroll offset');
-    }
-    if (duration === undefined) {
-      throw new Error('missing scroll duration');
-    }
     if (scrolling) {
       return;
     }
-    var startY = window.scrollY;
-    var maxY = document.body.scrollHeight - window.innerHeight;
+    if (offset === undefined) {
+      throw new Error('missing scroll offset');
+    }
+    duration = duration || 1000;
+    var startY = scrollY;
+    var maxY = document.body.scrollHeight - innerHeight;
     var targetY = Math.min(offset, maxY);
     var distance = targetY - startY;
     var startT = Date.now();
@@ -28,19 +28,19 @@ var ease = require('ease').ease;
       }
       if (Date.now() >= targetT) {
         scrolling = false;
-        window.scrollTo(window.scrollX, targetY);
+        scrollTo(scrollX, targetY);
         if (target !== undefined) {
-          window.location.hash = target;
+          location.hash = target;
         }
         return;
       }
       var t = (Date.now() - startT) / duration;
       var y = startY + distance * ease(t);
-      window.scrollTo(window.scrollX, y);
-      window.requestAnimationFrame(onAnimationFrame);
+      scrollTo(scrollX, y);
+      requestAnimationFrame(onAnimationFrame);
     };
     scrolling = true;
-    window.requestAnimationFrame(onAnimationFrame);
+    requestAnimationFrame(onAnimationFrame);
   };
 
   document.addEventListener('mousewheel', function () {
