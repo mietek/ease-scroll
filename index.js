@@ -6,7 +6,7 @@ var ease = require('ease').ease;
 (function () {
   var scrolling = false;
 
-  exports.scrollToOffset = function (offset, duration) {
+  exports.scrollToOffset = function (offset, duration, target) {
     if (offset === undefined) {
       throw new Error('missing scroll offset');
     }
@@ -29,6 +29,9 @@ var ease = require('ease').ease;
       if (Date.now() >= targetT) {
         scrolling = false;
         window.scrollTo(window.scrollX, targetY);
+        if (target !== undefined) {
+          window.location.hash = target;
+        }
         return;
       }
       var t = (Date.now() - startT) / duration;
