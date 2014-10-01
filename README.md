@@ -3,7 +3,7 @@ ease-scroll
 
 Smooth scrolling in the browser.
 
-Minimal.  Allows the user to interrupt scrolling.
+Allows the user to interrupt scrolling.  Minimal dependencies.
 
 Uses [ease](https://github.com/mietek/ease/) for CSS-style easing.
 
