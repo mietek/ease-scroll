@@ -16,7 +16,7 @@ var easeScroll = require('ease-scroll');
 
 document.getElementById('foo').addEventListener('click', function (event) {
   event.preventDefault();
-  easeScroll.scrollToElementById('bar', 1000);
+  easeScroll.scrollToElementById('bar', 500);
 });
 ```
 

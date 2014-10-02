@@ -15,7 +15,7 @@ var ease = require('ease').ease;
     if (offset === undefined) {
       throw new Error('missing scroll offset');
     }
-    duration = duration || 1000;
+    duration = duration || 500;
     var startY = scrollY;
     var maxY = document.body.scrollHeight - innerHeight;
     var targetY = Math.min(offset, maxY);
@@ -76,7 +76,7 @@ exports.scrollToElementById = function (id, duration) {
 
 
 exports.applyToLocalLinks = function (duration, fixLocalBase) {
-  duration = duration || 1000;
+  duration = duration || 500;
   fixLocalBase = fixLocalBase || true;
   function listener(id) {
     return function (event) {
