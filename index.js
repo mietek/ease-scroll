@@ -43,6 +43,7 @@ var ease = require('ease').ease;
     requestAnimationFrame(onAnimationFrame);
   };
 
+  // NOTE: Inertial scrolling in Safari generates events for longer than expected, preventing new scrolls.  There could be a heuristic — if there were many events prior to a scroll, and there are even more events after the scroll began, then disregard abort?
   document.addEventListener('mousewheel', function () {
     scrolling = false;
   });
