@@ -5,7 +5,7 @@ Smooth scrolling in the browser.
 
 Allows the user to interrupt scrolling.  Minimal dependencies.
 
-Uses [ease](https://github.com/mietek/ease/) for CSS-style easing.
+Uses [ease](https://github.com/mietek/ease/) for CSS-style easing.  Used in [cannot](https://github.com/mietek/cannot/).
 
 
 Usage
@@ -25,11 +25,11 @@ See [ease-scroll-example](https://github.com/mietek/ease-scroll-example/) for mo
 
 ### Installation
 
+Available as a [Bower](http://bower.io/) package.
+
 ```sh
 bower install ease-scroll
 ```
-
-Requires [Bower](http://bower.io/).
 
 
 License
