@@ -85,12 +85,6 @@ exports.applyToLocalLinks = function (duration, fixLocalBase) {
   if (fixLocalBase === undefined) {
     fixLocalBase = true;
   }
-  function listener(id) {
-    return function (event) {
-      event.preventDefault();
-      exports.scrollToElementById(id, duration);
-    };
-  }
   var localBase = location.origin + location.pathname;
   var links = document.links;
   [].forEach.call(links, function (link) {
@@ -100,7 +94,11 @@ exports.applyToLocalLinks = function (duration, fixLocalBase) {
       if (fixLocalBase) {
         link.href = localBase + href;
       }
-      link.addEventListener('click', listener(id));
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        exports.scrollToElementById(id, duration);
+      });
+      link.classList.add('local-link');
     }
   });
 };
