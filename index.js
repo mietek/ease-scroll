@@ -7,18 +7,17 @@ var ease = require('ease').ease;
 
 (function () {
   var scrolling = false;
+  var actualScrollY = scrollY;
+  var noPopScroll = false;
 
-  exports.scrollToOffset = function (offset, duration, target) {
-    if (scrolling) {
-      return;
-    }
+  exports.scrollToOffset = function (offset, duration) {
     if (offset === undefined) {
       throw new Error('missing scroll offset');
     }
     if (duration === undefined) {
       duration = 500;
     }
-    var startY = scrollY;
+    var startY = actualScrollY;
     var maxY = document.body.scrollHeight - innerHeight;
     var targetY = Math.min(offset, maxY);
     var distance = targetY - startY;
@@ -31,9 +30,6 @@ var ease = require('ease').ease;
       if (Date.now() >= targetT) {
         scrolling = false;
         scrollTo(scrollX, targetY);
-        if (target !== undefined) {
-          location.hash = target;
-        }
         return;
       }
       var t = (Date.now() - startT) / duration;
@@ -42,16 +38,43 @@ var ease = require('ease').ease;
       requestAnimationFrame(onAnimationFrame);
     };
     scrolling = true;
+    scrollTo(scrollX, startY);
     requestAnimationFrame(onAnimationFrame);
   };
+
+  // NOTE: Keeping track of the actual scroll position is necessary for scrolling smoothly when moving backward or forward through the history.
+  addEventListener('load', function () {
+    actualScrollY = scrollY;
+    history.replaceState({ offset: scrollY }, '', location);
+  });
+  addEventListener('scroll', function () {
+    actualScrollY = scrollY;
+  });
+
+  // NOTE: Mixing back/forward commands and gestures gives odd results in Safari 7.1, but works perfectly in Chrome and Firefox.
+  addEventListener('popstate', function (event) {
+    if (event.state && !noPopScroll) {
+      exports.scrollToOffset(event.state.offset);
+    }
+    noPopScroll = false;
+  });
 
   // NOTE: Inertial scrolling in Safari generates events for longer than expected, preventing new scrolls.  There could be a heuristic — if there were many events prior to a scroll, and there are even more events after the scroll began, then disregard abort?
   document.addEventListener('mousewheel', function () {
     scrolling = false;
+    noPopScroll = true;
   });
+  addEventListener('mousemove', function () {
+    noPopScroll = false;
+  });
+
   // NOTE: This also enables :active pseudo-classes on links in Safari on iOS.
   document.addEventListener('touchstart', function () {
     scrolling = false;
+    noPopScroll = true;
+  });
+  document.addEventListener('touchend', function () {
+    noPopScroll = false;
   });
 })();
 
@@ -73,7 +96,8 @@ exports.getElementOffsetById = function (id) {
 exports.scrollToElementById = function (id, duration) {
   var offset = exports.getElementOffsetById(id);
   if (offset !== undefined) {
-    exports.scrollToOffset(offset, duration, id);
+    history.pushState({ offset: offset, id: id }, '', '#' + id);
+    exports.scrollToOffset(offset, duration);
   }
 };
 
