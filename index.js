@@ -9,6 +9,7 @@ var ease = require('ease').ease;
   var scrolling = false;
   var actualScrollY = scrollY;
   var noPopScroll = false;
+  var loadTime;
 
   exports.scrollToOffset = function (offset, duration) {
     if (offset === undefined) {
@@ -44,6 +45,7 @@ var ease = require('ease').ease;
 
   // NOTE: Keeping track of the actual scroll position is necessary for scrolling smoothly when moving backward or forward through the history.
   addEventListener('load', function () {
+    loadTime = Date.now();
     actualScrollY = scrollY;
     history.replaceState({ offset: scrollY }, '', location);
   });
@@ -53,7 +55,7 @@ var ease = require('ease').ease;
 
   // NOTE: Mixing back/forward commands and gestures gives odd results in Safari 7.1, but works perfectly in Chrome and Firefox.
   addEventListener('popstate', function (event) {
-    if (event.state && !noPopScroll) {
+    if (event.state && !noPopScroll && Date.now() >= loadTime + 100) {
       exports.scrollToOffset(event.state.offset);
     }
     noPopScroll = false;
