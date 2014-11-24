@@ -43,6 +43,45 @@ var ease = require('ease').ease;
     requestAnimationFrame(onAnimationFrame);
   };
 
+  var scrollingElements = [];
+
+  exports.scrollElementByIdToHorizontalOffset = function (id, offset, duration) {
+    var el = document.getElementById(id);
+    if (!el) {
+      throw new Error('missing element');
+    }
+    if (offset === undefined) {
+      throw new Error('missing scroll offset');
+    }
+    if (duration === undefined) {
+      duration = 500;
+    }
+    var startX = el.scrollLeft;
+    var maxX = el.scrollWidth - el.clientWidth;
+    var targetX = Math.max(0, Math.min(offset, maxX));
+    var distance = targetX - startX;
+    var startT = Date.now();
+    var targetT = startT + duration;
+    var onAnimationFrame = function () {
+      if (scrollingElements.indexOf(id) === -1) {
+        return;
+      }
+      if (Date.now() >= targetT) {
+        delete scrollingElements[id];
+        el.scrollLeft = targetX;
+        return;
+      }
+      var t = (Date.now() - startT) / duration;
+      var x = startX + distance * ease(t);
+      el.scrollLeft = x;
+      requestAnimationFrame(onAnimationFrame);
+    };
+    if (scrollingElements.indexOf(id) === -1) {
+      scrollingElements.push(id);
+    }
+    requestAnimationFrame(onAnimationFrame);
+  };
+
   // NOTE: Keeping track of the actual scroll position is necessary for scrolling smoothly when moving backward or forward through the history.
   addEventListener('load', function () {
     loadTime = Date.now();
