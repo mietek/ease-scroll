@@ -20,7 +20,7 @@ var ease = require('ease').ease;
     }
     var startY = actualScrollY;
     var maxY = document.body.scrollHeight - innerHeight;
-    var targetY = Math.min(offset, maxY);
+    var targetY = Math.max(0, Math.min(offset, maxY));
     var distance = targetY - startY;
     var startT = Date.now();
     var targetT = startT + duration;
