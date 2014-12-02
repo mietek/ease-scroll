@@ -1,15 +1,10 @@
-ease-scroll
-===========
+_ease-scroll_
+=============
 
-Smooth scrolling in the browser.
-
-Allows the user to interrupt scrolling.  Minimal dependencies.
-
-Uses [ease](https://github.com/mietek/ease/) for CSS-style easing.  Used in [cannot](https://github.com/mietek/cannot/).
+Smooth scrolling in the browser, using [_ease_](https://github.com/mietek/ease/) for CSS-style easing.
 
 
-Usage
------
+### Example
 
 ```js
 var easeScroll = require('ease-scroll');
@@ -20,19 +15,20 @@ document.getElementById('foo').addEventListener('click', function (event) {
 });
 ```
 
-See [ease-scroll-example](https://github.com/mietek/ease-scroll-example/) for more information.
+See [_cannot_](https://cannot.mietek.io/) for more information.
 
 
-### Installation
+Usage
+-----
 
-Available as a [Bower](http://bower.io/) package.
+_ease-scroll_ is installed with [Bower](http://bower.io/).
 
-```sh
-bower install ease-scroll
+```
+$ bower install ease-scroll
 ```
 
 
-License
--------
+About
+-----
 
-[MIT X11](https://github.com/mietek/license/blob/master/LICENSE.md) © [Miëtek Bak](http://mietek.io/)
+Made by [Miëtek Bak](https://mietek.io/).  Published under the [MIT X11 license](https://mietek.io/license/).
