@@ -147,16 +147,11 @@ exports.applyToLocalLinks = function (duration) {
   if (duration === undefined) {
     duration = 500;
   }
-  var links = document.links;
+  var links = document.querySelectorAll('a[href^="#"]');
   [].forEach.call(links, function (link) {
-    var href = link.getAttribute('href');
-    if (href[0] === '#') {
-      var id = href.slice(1);
-      link.addEventListener('click', function (event) {
-        event.preventDefault();
-        exports.scrollToElementById(id, duration);
-      });
-      link.classList.add('local-link');
-    }
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      exports.scrollToElementById(this.hash.slice(1), duration);
+    });
   });
 };
