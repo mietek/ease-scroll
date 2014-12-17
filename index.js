@@ -143,22 +143,15 @@ exports.scrollToElementById = function (id, duration) {
 };
 
 
-exports.applyToLocalLinks = function (duration, fixLocalBase) {
+exports.applyToLocalLinks = function (duration) {
   if (duration === undefined) {
     duration = 500;
   }
-  if (fixLocalBase === undefined) {
-    fixLocalBase = true;
-  }
-  var localBase = location.origin + location.pathname;
   var links = document.links;
   [].forEach.call(links, function (link) {
     var href = link.getAttribute('href');
     if (href[0] === '#') {
       var id = href.slice(1);
-      if (fixLocalBase) {
-        link.href = localBase + href;
-      }
       link.addEventListener('click', function (event) {
         event.preventDefault();
         exports.scrollToElementById(id, duration);
