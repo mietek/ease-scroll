@@ -137,7 +137,9 @@ exports.getElementOffsetById = function (id) {
 exports.scrollToElementById = function (id, duration) {
   var offset = exports.getElementOffsetById(id);
   if (offset !== undefined) {
-    history.pushState({ offset: offset, id: id }, '', '#' + id);
+    if (location.hash.slice(1) !== id) {
+      history.pushState({ offset: offset, id: id }, '', '#' + id);
+    }
     exports.scrollToOffset(offset, duration);
   }
 };
