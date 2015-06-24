@@ -5,7 +5,7 @@ var ease = require('ease').ease;
 /* global innerHeight, requestAnimationFrame, scrollX, scrollY */
 
 
-function tween(startOffset, maxOffset, offset, duration, callback, endCallback) {
+exports.tween = function (startOffset, maxOffset, offset, duration, callback, endCallback) {
   var targetOffset = Math.max(0, Math.min(offset, maxOffset));
   var distance = targetOffset - startOffset;
   var startTime = Date.now();
@@ -24,7 +24,7 @@ function tween(startOffset, maxOffset, offset, duration, callback, endCallback) 
     }
   };
   requestAnimationFrame(onAnimationFrame);
-}
+};
 
 
 (function () {
@@ -37,7 +37,7 @@ function tween(startOffset, maxOffset, offset, duration, callback, endCallback) 
     }
     var startOffset = scrollY;
     var maxOffset = document.body.scrollHeight - innerHeight;
-    tween(startOffset, maxOffset, offset, duration, function (y) {
+    exports.tween(startOffset, maxOffset, offset, duration, function (y) {
       scrollTo(scrollX, y);
     }, callback);
   };
@@ -55,7 +55,7 @@ function tween(startOffset, maxOffset, offset, duration, callback, endCallback) 
     }
     var startOffset = el.scrollLeft;
     var maxOffset = el.scrollWidth - el.clientWidth;
-    tween(startOffset, maxOffset, offset, duration, function (x) {
+    exports.tween(startOffset, maxOffset, offset, duration, function (x) {
       el.scrollLeft = x;
     }, callback);
   };
