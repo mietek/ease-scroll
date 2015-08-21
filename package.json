@@ -1,0 +1,16 @@
+{
+  "name": "ease-scroll",
+  "version": "2.0.0",
+  "description": "Smooth scrolling in the browser",
+  "author": "Miëtek Bak <hello@mietek.io>",
+  "homepage": "https://github.com/mietek/ease-scroll",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mietek/ease-scroll"
+  },
+  "license": "MIT",
+  "main": "src/index.js",
+  "dependencies": {
+    "ease-tween": "^1.1.0"
+  }
+}
